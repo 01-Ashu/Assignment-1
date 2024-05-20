@@ -1,0 +1,321 @@
+package com.VehicleRentalSystem;
+
+import java.rmi.server.UID;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+//Creating a Vechicle Clas
+abstract class Vehicle{
+private String name;
+	
+	private UUID Id;
+	private String make;
+	private String modal;
+	private int  year;
+	private double rentalRate;
+	private boolean Availablity;
+	public Vehicle(UUID Id, String make, String modal, int year,double rentalRate, boolean availablity) {
+	
+		this.Id = Id;
+		this.make = make;
+		this.modal = modal;
+		this.year = year;
+		this.rentalRate = rentalRate;
+		Availablity = availablity;
+	}
+	
+	public UUID getId() {
+		return Id;
+	}
+	public void setId(UUID Id) {
+		this.Id = Id;
+	}
+	public String getMake() {
+		return make;
+	}
+	public void setMake(String make) {
+		this.make = make;
+	}
+	public String getModal() {
+		return modal;
+	}
+	public void setModal(String modal) {
+		this.modal = modal;
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public double getRentalRate() {
+		return rentalRate;
+	}
+	public void setRentalRate(int rentalRate) {
+		this.rentalRate = rentalRate;
+	}
+	public boolean getAvailablity() {
+		return Availablity;
+	}
+	public void setAvailablity(boolean availablity) {
+		Availablity = availablity;
+	}
+	abstract void setVehicleName(String name);
+	
+	
+	
+}
+//Create Customer Class
+//Which has a rental History
+class Customer{
+	private UUID CustomerId;
+	private String name;
+	private String licenseNumber;
+	//List Because we have to store the history of the rent
+	private List<Rental> rentalHistory;
+	public UUID getCustomerId() {
+		return CustomerId;
+	}
+	public void setCustomerId(UUID customerId) {
+		CustomerId = customerId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getLicenseNumber() {
+		return licenseNumber;
+	}
+	public void setLicenseNumber(String licenseNumber) {
+		this.licenseNumber = licenseNumber;
+	}
+	public List<Rental> getRentalHistory() {
+		return rentalHistory;
+	}
+	public void setRentalHistory(List<Rental> rentalHistory) {
+		this.rentalHistory = rentalHistory;
+	}
+	
+	
+}
+//Creating a Rental Class
+//has Customer
+//has Vehicle
+//has Discount
+class Rental{
+	private UUID rentalID;
+	private Customer customer;
+	private Vehicle vehicle;
+	private Date rentalStartDate;
+	private Date rentalEndDate;
+	private Discount discount;
+	
+	public Rental(UUID rentalID, Customer customer, Vehicle vehicle, Date rentalStartDate, Date rentalEndDate,
+			Discount discount) {
+		super();
+		this.rentalID = rentalID;
+		this.customer = customer;
+		this.vehicle = vehicle;
+		this.rentalStartDate = rentalStartDate;
+		this.rentalEndDate = rentalEndDate;
+		this.discount = discount;
+	}
+	public UUID getRentalID() {
+		return rentalID;
+	}
+	public void setRentalID(UUID rentalID) {
+		this.rentalID = rentalID;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
+	public Date getRentalStartDate() {
+		return rentalStartDate;
+	}
+	public void setRentalStartDate(Date rentalStartDate) {
+		this.rentalStartDate = rentalStartDate;
+	}
+	public Date getRentalEndDate() {
+		return rentalEndDate;
+	}
+	public void setRentalEndDate(Date rentalEndDate) {
+		this.rentalEndDate = rentalEndDate;
+	}
+	
+	
+}
+
+//Inherits the Vehicle Class
+class Car extends Vehicle{
+	private String name;
+	
+	private UUID Id;
+	private String make;
+	private String modal;
+	private Date  year;
+	private double rentalRate;
+	private boolean Availablity;
+	public Car(UUID Id, String make, String modal, int year, double rentalRate, boolean availablity) {
+	super( Id,  make,  modal,  year,  rentalRate,  availablity);
+		}
+	public void setVehicleName(String name) {
+		this.name=name;
+	}
+}
+class Truck extends Vehicle{
+	private String name;
+	
+	private UUID Id;
+	private String make;
+	private String modal;
+	private String  year;
+	private double rentalRate;
+	private boolean Availablity;
+	public Truck(UUID Id, String make, String modal, int year, int rentalRate, boolean availablity) {
+	super( Id,  make,  modal,  year,  rentalRate,  availablity);
+	
+	
+	}
+	public void setVehicleName(String name) {
+		this.name=name;
+	}
+}
+class MotorCycle extends Vehicle{
+	private String name;
+	
+	private UUID Id;
+	private String make;
+	private String modal;
+	private String  year;
+	private int rentalRate;
+	private boolean Availablity;
+	public MotorCycle(UUID Id, String make, String modal, int year, int rentalRate, boolean availablity) {
+	super( Id,  make,  modal,  year,  rentalRate,  availablity);
+	}
+	public void setVehicleName(String name) {
+		this.name=name;
+	}
+}
+//Creating a Payment Class
+//has Rental 
+abstract class Payment {
+	
+	private UUID Id;
+	private Rental rental;
+	private double amount;
+	private Date paymentDate;
+	private String paymentMethod;
+	public UUID getId() {
+		return Id;
+	}
+	public void setId(UUID Id) {
+		this.Id = Id;
+	}
+	public Rental getRental() {
+		return rental;
+	}
+	public void setRental(Rental rental) {
+		this.rental = rental;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	abstract void setPaymentMethod(String paymentMethod);
+	
+	
+}
+
+class CreditCard extends Payment{
+	private String paymentMethod;
+	
+	@Override
+	void setPaymentMethod(String paymentname) {
+		this.paymentMethod=paymentname;
+		
+	}
+}
+
+class DebitCard extends Payment{
+private String paymentMethod;
+	
+@Override
+void setPaymentMethod(String paymentname) {
+	this.paymentMethod=paymentname;
+	
+}
+}
+class Cash extends Payment{
+private String paymentMethod;
+	
+@Override
+void setPaymentMethod(String paymentname) {
+	this.paymentMethod=paymentname;
+	
+}
+}
+//Creating a Discount
+
+class Discount{
+	private UUID Id;
+	private String description;
+	private double discountRate;
+	private Date validityPeriod;
+	
+	public UUID getId() {
+		return Id;
+	}
+	public void setId(UUID Id) {
+		this.Id = Id;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public double getDiscountRate() {
+		return discountRate;
+	}
+	public void setDiscountRate(int discountRate) {
+		this.discountRate = discountRate;
+	}
+	public Date getValidityPeriod() {
+		return validityPeriod;
+	}
+	public void setValidityPeriod(Date validityPeriod) {
+		this.validityPeriod = validityPeriod;
+	}
+	
+}
+
+public class VehicleRentalSystem {
+public static void main(String args[]){
+	
+  
+  }
+  
+}
